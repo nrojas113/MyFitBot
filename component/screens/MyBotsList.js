@@ -15,6 +15,9 @@ import {
 import Header from "../utils/Header";
 import Images from "../images/index";
 import BotDescription from "../utils/BotDescription";
+import { firebase } from "../../firebase/config";
+
+// const BotsRef = firebase.firestore().collection("Bots").doc("");
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.7;
@@ -35,9 +38,37 @@ const ImagesArr = [
   },
   { title: "Thinking", url: "https://i.postimg.cc/Cx30LKJQ/thinking.jpg" },
 ];
-console.log(ImagesArr);
+// console.log(ImagesArr);
 
 const MyBotsList = () => {
+  const [loading, setLoading] = useState(true);
+  const [bots, setBots] = useState([]);
+  const ref = firebase.firestore().collection("Bots");
+  // console.log("REF", ref);
+
+  useEffect(() => {
+    return ref.onSnapshot((querySnapshot) => {
+      const botsList = [];
+      querySnapshot.forEach((doc) => {
+        const { mood, imageURL, stepRange, comments } = doc.data();
+        botsList.push({
+          id: doc.id,
+          mood,
+          imageURL,
+          stepRange,
+          comments,
+        });
+      });
+
+      setBots(botsList);
+      if (loading) {
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  console.log(bots);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Header />

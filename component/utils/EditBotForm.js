@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import firebase from "firebase";
 export default class EditBotForm extends Component {
   constructor(props) {
     super(props);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import Header from "../utils/Header";
-import accessToken from "../../secrets";
+import { accessToken } from "../../secrets";
 import axios from "axios";
 import Graphs from "../utils/Graphs";
 
