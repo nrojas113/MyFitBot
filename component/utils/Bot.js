@@ -1,9 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import React, { useState, useEffect, Component } from "react";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Animated,
+  Platform,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Images from "../images/index";
 
+class ImageLoader extends Component {
+  state = {
+    opacity: new Animated.Value(0),
+  };
+
+  onLoad = () => {
+    Animated.timing(this.state.opacity, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  };
+  render() {
+    return (
+      <Animated.Image
+        onLoad={this.onLoad}
+        {...this.props}
+        style={[
+          {
+            opacity: this.state.opacity,
+            transform: [
+              {
+                scale: this.state.opacity.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0.85, 1],
+                }),
+              },
+            ],
+          },
+          this.props.style,
+        ]}
+      />
+    );
+  }
+}
+
 const Bot = ({ steps }) => {
-  console.log("stept", steps);
   let botType =
     steps > 10000
       ? "yes"
@@ -17,12 +60,11 @@ const Bot = ({ steps }) => {
       ? "judging"
       : "confused";
 
-  console.log("botyType", botType);
   const mood = Images[botType];
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={mood} />
+      <ImageLoader style={styles.image} source={mood} />
     </View>
   );
 };
@@ -36,6 +78,8 @@ const styles = StyleSheet.create({
   image: {
     width: 300,
     height: 300,
+    backgroundColor: "transparent",
+    borderRadius: 16,
   },
 });
 

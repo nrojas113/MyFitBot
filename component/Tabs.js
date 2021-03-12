@@ -34,7 +34,7 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="MyBotsList"
+        name="MyBot"
         component={MyBotsList}
         options={{
           tabBarIcon: ({ color, size }) => (
