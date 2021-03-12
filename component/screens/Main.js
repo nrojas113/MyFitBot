@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import accessToken from "../../secrets";
+import { accessToken } from "../../secrets";
 import Header from "../utils/Header";
 import TodayDate from "../utils/TodayDate";
 import Bot from "../utils/Bot";

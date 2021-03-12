@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,12 @@ import {
   Image,
   StatusBar,
   Animated,
+  Button,
+  TextInput,
 } from "react-native";
 import Header from "../utils/Header";
 import Images from "../images/index";
+import BotDescription from "../utils/BotDescription";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.7;
@@ -23,7 +26,7 @@ const ImagesArr = [
   { title: "Judging", url: "https://i.postimg.cc/FsHT0qyN/judging.jpg" },
   { title: "Sad", url: "https://i.postimg.cc/bJf6bwTB/sad.jpg" },
   { title: "Superwoman", url: "https://i.postimg.cc/85dZbgXP/superwoman.jpg" },
-  { title: "Yes", url: "https://i.postimg.cc/7PVBGDTK/yes.jpg" },
+  { title: "Joy", url: "https://i.postimg.cc/7PVBGDTK/yes.jpg" },
   { title: "Congrats", url: "https://i.postimg.cc/XJ30dDRK/congrats.jpg" },
   { title: "Lets go", url: "https://i.postimg.cc/6p2wXZVZ/letsgo.jpg" },
   {
@@ -43,7 +46,7 @@ const MyBotsList = () => {
         keyExtraction={(_, index) => index.toString()}
         horizontal
         pagingEnabled
-        renderItem={({ item }) => {
+        renderItem={({ item, idx }) => {
           return (
             <View
               style={{
@@ -70,10 +73,7 @@ const MyBotsList = () => {
                   borderRadius: 16,
                 }}
               />
-              <Text style={{ marginTop: 20, fontSize: 40 }}>{item.title}</Text>
-              <Text style={{ marginTop: 20, fontSize: 20 }}>
-                Step Range: Less than 500
-              </Text>
+              <BotDescription item={item} imageW={imageW} key={idx} />
             </View>
           );
         }}

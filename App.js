@@ -3,6 +3,12 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Tabs from "./component/Tabs";
+// import * as firebase from "firebase";
+// import {firebaseConfig} from "./secrets";
+
+// if (firebase.apps.length === 0) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 
 const Stack = createStackNavigator();
 const App = () => {
