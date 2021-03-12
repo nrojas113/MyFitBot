@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import Header from "./Header";
-import TodayDate from "./TodayDate";
-import Bot from "./Bot";
-import Steps from "./Steps";
+import accessToken from "../../secrets";
+import Header from "../utils/Header";
+import TodayDate from "../utils/TodayDate";
+import Bot from "../utils/Bot";
+import Steps from "../utils/Steps";
 import axios from "axios";
-import accessToken from "../secrets";
 
 const Main = (props) => {
   const [todaySteps, setTodaySteps] = useState(null);

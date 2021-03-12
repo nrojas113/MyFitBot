@@ -1,8 +1,8 @@
 import "react-native-gesture-handler";
 import React from "react";
-import Main from "./component/Main";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Tabs from "./component/Tabs";
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -10,8 +10,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
         <Stack.Screen
-          name="Main"
-          component={Main}
+          name="Tabs"
+          component={Tabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

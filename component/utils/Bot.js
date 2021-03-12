@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import Images from "./images/index";
+import Images from "../images/index";
 
 const Bot = ({ steps }) => {
   console.log("stept", steps);
   let botType =
     steps > 10000
-      ? "superwomen"
+      ? "yes"
       : steps > 5000
       ? "greatjob"
       : steps > 2000
-      ? "sad"
-      : steps > 1000
       ? "confused"
-      : "judging";
+      : steps > 1000
+      ? "sad"
+      : steps > 500
+      ? "judging"
+      : "confused";
 
   console.log("botyType", botType);
   const mood = Images[botType];
