@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import firebase from "firebase";
-import { Text, View, Button, TextInput, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  TextInput,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Platform,
+} from "react-native";
 export default class EditBotForm extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +50,10 @@ export default class EditBotForm extends Component {
     console.log("BOT INFO", this.props.bot);
     console.log(this.state);
     return (
-      <View>
+      <KeyboardAvoidingView
+      // behavior={Platform.OS === "ios" ? "padding" : "height"}
+      // style={styles.keyboard}
+      >
         <View style={styles.container}>
           <View>
             <Text>Step Achieved: </Text>
@@ -60,12 +71,15 @@ export default class EditBotForm extends Component {
           </View>
         </View>
         <Button title="update" onPress={() => this.submitChange()} />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  keyboard: {
+    flex: 1,
+  },
   container: {
     flexDirection: "row",
     justifyContent: "center",

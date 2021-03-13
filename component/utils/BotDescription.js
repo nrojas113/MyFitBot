@@ -37,7 +37,7 @@ const BotDescription = (props) => {
       <Text
         style={{
           marginTop: 20,
-          fontSize: 22,
+          fontSize: 10,
           width: imageW,
           textAlign: "center",
           fontFamily: "EuphemiaUCAS-Italic",

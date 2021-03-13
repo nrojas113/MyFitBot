@@ -11,6 +11,7 @@ import {
   Animated,
   Button,
   TextInput,
+  ScrollView,
 } from "react-native";
 import Header from "../utils/Header";
 import Images from "../images/index";
@@ -78,8 +79,8 @@ const MyBotsList = () => {
                 <Image
                   source={{ uri: bot.item.imageURL }}
                   style={{
-                    width: imageW,
-                    height: imageH,
+                    width: imageW * 0.8,
+                    height: imageH * 0.8,
                     resizeMode: "cover",
                     borderRadius: 16,
                   }}
