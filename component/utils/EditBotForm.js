@@ -1,35 +1,81 @@
 import React, { Component } from "react";
 import firebase from "firebase";
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, Button, TextInput, StyleSheet } from "react-native";
 export default class EditBotForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mood: "",
-      stepRange: 0,
+      stepRange: "",
       comments: "",
     };
     this.submitChange = this.submitChange.bind(this);
   }
   componentDidMount() {
     this.setState({
-      mood: this.props.bot.mood,
       stepRange: this.props.bot.stepRange,
       comments: this.props.bot.comments,
     });
   }
-  submitChange() {}
+  async submitChange() {
+    console.log("submit change triggered!!");
+    try {
+      console.log("ID", this.props.bot.id);
+      const ref = firebase
+        .firestore()
+        .collection("Bots")
+        .doc(this.props.bot.id);
+      await ref.set({
+        stepRange: Number(this.state.stepRange),
+        comments: this.state.comments,
+        imageURL: this.props.bot.imageURL,
+        mood: this.props.bot.mood,
+      });
+      this.setState({
+        stepRange: "",
+        comments: "",
+      });
+    } catch (error) {
+      console.log("Error updating bot", error);
+    }
+  }
   render() {
+    console.log("BOT INFO", this.props.bot);
+    console.log(this.state);
     return (
       <View>
-        <Text>Mood: </Text>
-        <TextInput onChangeText={(mood) => this.setState(mood)} />
-        <Text>Step Achieved: </Text>
-        <TextInput onChangeText={(stepRange) => this.setState(stepRange)} />
-        <Text>Comments: </Text>
-        <TextInput onChangeText={(comments) => this.setState(comments)} />
-        <Button title="update" onPress={() => this.submitChange} />
+        <View style={styles.container}>
+          <View>
+            <Text>Step Achieved: </Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(input) => this.setState({ stepRange: input })}
+            />
+          </View>
+          <View>
+            <Text>Comments: </Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(input) => this.setState({ comments: input })}
+            />
+          </View>
+        </View>
+        <Button title="update" onPress={() => this.submitChange()} />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    margin: 15,
+    height: 25,
+    width: 120,
+    borderColor: "#7a42f4",
+    borderWidth: 1,
+  },
+});

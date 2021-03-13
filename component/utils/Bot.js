@@ -64,7 +64,7 @@ const Bot = ({ steps }) => {
         bots.push(doc.data());
       });
       const filterBots = bots
-        .filter((bot) => bot.stepRange < steps)
+        .filter((bot) => bot.stepRange <= steps)
         .sort((a, b) => b.stepRange - a.stepRange);
       setBot(filterBots[0]);
       if (loading) {
@@ -76,7 +76,7 @@ const Bot = ({ steps }) => {
 
   return (
     <View style={styles.container}>
-      {bot.mood && (
+      {bot && (
         <View>
           <ImageLoader style={styles.image} source={{ uri: bot.imageURL }} />
           <Text style={styles.text}>{bot.comments}</Text>
@@ -88,6 +88,7 @@ const Bot = ({ steps }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 10,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -97,8 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   text: {
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 20,
     fontSize: 20,
     fontFamily: "EuphemiaUCAS-Italic",
     textAlign: "center",

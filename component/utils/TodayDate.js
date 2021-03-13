@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   text: {
-    fontFamily: "Futura",
+    fontFamily: "EuphemiaUCAS",
     color: "dimgrey",
-    fontSize: 40,
+    fontSize: 30,
     textAlign: "center",
     fontWeight: "bold",
   },

@@ -51,7 +51,7 @@ const Main = (props) => {
 // React Native Styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingTop: 60,
   },
 });

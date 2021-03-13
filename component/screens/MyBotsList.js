@@ -49,7 +49,7 @@ const MyBotsList = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <Header />
       {bots.length !== 0 && (
         <Animated.FlatList

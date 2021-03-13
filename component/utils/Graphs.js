@@ -87,7 +87,7 @@ const Graphs = (props) => {
     <View style={styles.container}>
       {allSteps && activities ? (
         <View>
-          <Text style={styles.text}>Activities Stats</Text>
+          <Text style={styles.text}>My Activities Stats</Text>
           <PieChart
             data={pieData}
             width={Dimensions.get("window").width}
@@ -97,7 +97,7 @@ const Graphs = (props) => {
             backgroundColor="transparent"
             style={{ marginBottom: 20 }}
           />
-          <Text style={styles.text}>Steps Stats (1m)</Text>
+          <Text style={styles.text}>My Steps Stats (1m)</Text>
           <LineChart
             data={pastSteps}
             width={Dimensions.get("window").width}
