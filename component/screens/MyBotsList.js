@@ -17,34 +17,14 @@ import Images from "../images/index";
 import BotDescription from "../utils/BotDescription";
 import { firebase } from "../../firebase/config";
 
-// const BotsRef = firebase.firestore().collection("Bots").doc("");
-
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.7;
 const imageH = imageW * 1;
-
-const ImagesArr = [
-  { title: "Confused", url: "https://i.postimg.cc/Wz2XWYxm/confused.jpg" },
-  { title: "Great Job", url: "https://i.postimg.cc/WzXSQ6PB/greatjob.jpg" },
-  { title: "Judging", url: "https://i.postimg.cc/FsHT0qyN/judging.jpg" },
-  { title: "Sad", url: "https://i.postimg.cc/bJf6bwTB/sad.jpg" },
-  { title: "Superwoman", url: "https://i.postimg.cc/85dZbgXP/superwoman.jpg" },
-  { title: "Joy", url: "https://i.postimg.cc/7PVBGDTK/yes.jpg" },
-  { title: "Congrats", url: "https://i.postimg.cc/XJ30dDRK/congrats.jpg" },
-  { title: "Lets go", url: "https://i.postimg.cc/6p2wXZVZ/letsgo.jpg" },
-  {
-    title: "Overwhelmed",
-    url: "https://i.postimg.cc/9fyh4jnF/overwhelmed.jpg",
-  },
-  { title: "Thinking", url: "https://i.postimg.cc/Cx30LKJQ/thinking.jpg" },
-];
-// console.log(ImagesArr);
 
 const MyBotsList = () => {
   const [loading, setLoading] = useState(true);
   const [bots, setBots] = useState([]);
   const ref = firebase.firestore().collection("Bots");
-  // console.log("REF", ref);
 
   useEffect(() => {
     return ref.onSnapshot((querySnapshot) => {
@@ -59,6 +39,7 @@ const MyBotsList = () => {
           comments,
         });
       });
+      botsList.sort((a, b) => a.stepRange - b.stepRange);
 
       setBots(botsList);
       if (loading) {
@@ -67,48 +48,48 @@ const MyBotsList = () => {
     });
   }, []);
 
-  console.log(bots);
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Header />
-      <Animated.FlatList
-        data={ImagesArr}
-        keyExtraction={(_, index) => index.toString()}
-        horizontal
-        pagingEnabled
-        renderItem={({ item, idx }) => {
-          return (
-            <View
-              style={{
-                width,
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 20,
-                backgroundColor: "rgba(255,255,255,0.8",
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 10,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 20,
-              }}
-            >
-              <Image
-                source={{ uri: item.url }}
+      {bots.length !== 0 && (
+        <Animated.FlatList
+          data={bots}
+          keyExtraction={(_, index) => index.toString()}
+          horizontal
+          pagingEnabled
+          renderItem={(bot) => {
+            return (
+              <View
                 style={{
-                  width: imageW,
-                  height: imageH,
-                  resizeMode: "cover",
-                  borderRadius: 16,
+                  width,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 20,
+                  backgroundColor: "rgba(255,255,255,0.8)",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 10,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 20,
                 }}
-              />
-              <BotDescription item={item} imageW={imageW} key={idx} />
-            </View>
-          );
-        }}
-      />
+              >
+                <Image
+                  source={{ uri: bot.item.imageURL }}
+                  style={{
+                    width: imageW,
+                    height: imageH,
+                    resizeMode: "cover",
+                    borderRadius: 16,
+                  }}
+                />
+                <BotDescription bot={bot.item} imageW={imageW} key={bot.id} />
+              </View>
+            );
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

@@ -12,12 +12,14 @@ const TodayDate = ({ today }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: 20,
   },
   text: {
-    color: "black",
+    fontFamily: "Futura",
+    color: "dimgrey",
     fontSize: 40,
     textAlign: "center",
+    fontWeight: "bold",
   },
 });
 

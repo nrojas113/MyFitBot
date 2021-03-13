@@ -7,8 +7,13 @@ import {
   Platform,
   Dimensions,
   TouchableOpacity,
+  Text,
 } from "react-native";
-import Images from "../images/index";
+import { firebase } from "../../firebase/config";
+
+const { width, height } = Dimensions.get("screen");
+const imageW = width * 0.7;
+const imageH = imageW * 1;
 
 class ImageLoader extends Component {
   state = {
@@ -18,7 +23,7 @@ class ImageLoader extends Component {
   onLoad = () => {
     Animated.timing(this.state.opacity, {
       toValue: 1,
-      duration: 2000,
+      duration: 500,
       useNativeDriver: true,
     }).start();
   };
@@ -47,39 +52,60 @@ class ImageLoader extends Component {
 }
 
 const Bot = ({ steps }) => {
-  let botType =
-    steps > 10000
-      ? "yes"
-      : steps > 5000
-      ? "greatjob"
-      : steps > 2000
-      ? "confused"
-      : steps > 1000
-      ? "sad"
-      : steps > 500
-      ? "judging"
-      : "confused";
+  const [loading, setLoading] = useState(true);
+  const [bot, setBot] = useState({});
+  const ref = firebase.firestore().collection("Bots");
 
-  const mood = Images[botType];
+  useEffect(() => {
+    const fetchMyBot = async () => {
+      const snapshot = await ref.get();
+      let bots = [];
+      snapshot.forEach((doc) => {
+        bots.push(doc.data());
+      });
+      const filterBots = bots
+        .filter((bot) => bot.stepRange < steps)
+        .sort((a, b) => b.stepRange - a.stepRange);
+      setBot(filterBots[0]);
+      if (loading) {
+        setLoading(false);
+      }
+    };
+    fetchMyBot();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <ImageLoader style={styles.image} source={mood} />
+      {bot.mood && (
+        <View>
+          <ImageLoader style={styles.image} source={{ uri: bot.imageURL }} />
+          <Text style={styles.text}>{bot.comments}</Text>
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "flex-start",
   },
   image: {
-    width: 300,
-    height: 300,
-    backgroundColor: "transparent",
-    borderRadius: 16,
+    // width: imageW,
+    height: imageH,
+    borderRadius: 30,
+  },
+  text: {
+    marginTop: 10,
+    marginBottom: 20,
+    fontSize: 20,
+    fontFamily: "EuphemiaUCAS-Italic",
+    textAlign: "center",
+    // color: "#ff006e",
+    fontWeight: "bold",
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
 

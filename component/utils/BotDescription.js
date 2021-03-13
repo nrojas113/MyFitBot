@@ -3,11 +3,10 @@ import { View, Text, Dimensions, Button } from "react-native";
 import EditBotForm from "../utils/EditBotForm";
 
 const BotDescription = (props) => {
-  const { item, imageW } = props;
+  const { bot, imageW } = props;
   const { width } = Dimensions.get("screen");
   const [editStatus, setEditStatue] = useState(false);
 
-  console.log("ITEM", item);
   return (
     <View
       style={{
@@ -16,21 +15,38 @@ const BotDescription = (props) => {
         alignItems: "center",
       }}
     >
-      <Text style={{ marginTop: 20, fontSize: 40 }}>{item.title}</Text>
-      <Text style={{ marginTop: 20, fontSize: 20 }}>
-        Step Range: Less than 500
+      <Text
+        style={{
+          marginTop: 20,
+          fontSize: 40,
+          fontFamily: "EuphemiaUCAS",
+        }}
+      >
+        {bot.mood}
       </Text>
       <Text
         style={{
           marginTop: 20,
           fontSize: 20,
-          width: imageW,
+          fontFamily: "EuphemiaUCAS",
+          textDecorationLine: "underline",
         }}
       >
-        Comments: hmmmm I thought I could do better than that.
+        Steps Achieved: {bot.stepRange}
+      </Text>
+      <Text
+        style={{
+          marginTop: 20,
+          fontSize: 22,
+          width: imageW,
+          textAlign: "center",
+          fontFamily: "EuphemiaUCAS-Italic",
+        }}
+      >
+        "{bot.comments}"
       </Text>
       <Button title="Edit" onPress={() => setEditStatue((prev) => !prev)} />
-      {editStatus ? <Text>Can edit now!</Text> : <Text></Text>}
+      {editStatus ? <EditBotForm bot={bot} /> : <Text></Text>}
     </View>
   );
 };

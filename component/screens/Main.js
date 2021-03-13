@@ -31,8 +31,6 @@ const Main = (props) => {
     fetchTodaySteps();
   }, []);
 
-  console.log(todaySteps);
-
   return (
     <SafeAreaView style={styles.container}>
       <Header />
