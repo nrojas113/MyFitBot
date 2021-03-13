@@ -1,18 +1,30 @@
 import { weatherAPIKey } from "../../secrets";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, Text, StyleSheet, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Platform,
+  Pressable,
+  Touchable,
+  Alert,
+  Modal,
+  Dimensions,
+} from "react-native";
+import WeatherForecast from "./WeatherForecast";
 
 const TodayWeather = () => {
   const [weather, setWeather] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
     const fetchTodayWeather = async () => {
       try {
         const { data } = await axios.get(
-          `http://api.openweathermap.org/data/2.5/weather?q=New%20Jersey&units=imperial&appid=${weatherAPIKey}`
+          `https://api.openweathermap.org/data/2.5/onecall?lat=40.719074&lon=-74.050552&exclude=minutely,hourly&units=imperial&appid=${weatherAPIKey}`
         );
-        // console.log(weatherAPIKey);
-        console.log("weather info", data);
         setWeather(data);
       } catch (error) {
         console.log("Error fetching weather", error);
@@ -24,22 +36,47 @@ const TodayWeather = () => {
 
   return (
     <View>
-      {weather.main ? (
-        <View style={styles.container}>
-          <Image
-            source={{
-              uri: `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`,
+      {weather.current ? (
+        <View>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
             }}
-            style={styles.icon}
-          ></Image>
-          <Text style={styles.text}>
-            {Math.ceil(weather.main.temp)} F{" "}
-            <Text style={styles.feelsLike}>
-              (Feels Like {Math.ceil(weather.main.feels_like)} F){" "}
-            </Text>
-          </Text>
-
-          {/* <Text style={{ fontSize: 15 }}>{weather.name}</Text> */}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>
+                  <WeatherForecast weatherData={weather} />
+                </Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Close</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <View style={styles.container}>
+              <Image
+                source={{
+                  uri: `http://openweathermap.org/img/w/${weather.current.weather[0].icon}.png`,
+                }}
+                style={styles.icon}
+              ></Image>
+              <Text style={styles.text}>
+                {Math.ceil(weather.current.temp)} F{" "}
+                <Text style={styles.feelsLike}>
+                  (Feels Like {Math.ceil(weather.current.feels_like)} F){" "}
+                </Text>
+              </Text>
+            </View>
+          </Pressable>
         </View>
       ) : (
         <Text>No Weather Info</Text>
@@ -47,14 +84,20 @@ const TodayWeather = () => {
     </View>
   );
 };
+const { width, height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    // justifyContent: "space-between",
-    // marginTop: 10,
-    // marginRight: 8,
-    // marginLeft: 8,
+    // backgroundColor: "whitesmoke",
+    // shadowColor: "black",
+    // shadowOffset: {
+    //   width: 5,
+    //   height: 0,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 5,
+    // borderRadius: 10,
   },
   icon: {
     width: 45,
@@ -71,6 +114,49 @@ const styles = StyleSheet.create({
   },
   feelsLike: {
     fontSize: 12,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    width,
+    height: height * 0.78,
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
 
