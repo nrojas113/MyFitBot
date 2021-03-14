@@ -1,7 +1,15 @@
 // React Native Counter Example using Hooks!
 
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Pressable,
+  Dimensions,
+  Modal,
+} from "react-native";
 import { accessToken } from "../../secrets";
 import Header from "../utils/Header";
 import TodayDate from "../utils/TodayDate";
@@ -30,7 +38,6 @@ const Main = (props) => {
     }
     fetchTodaySteps();
   }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -47,6 +54,8 @@ const Main = (props) => {
     </SafeAreaView>
   );
 };
+
+const { width, height } = Dimensions.get("screen");
 
 // React Native Styles
 const styles = StyleSheet.create({

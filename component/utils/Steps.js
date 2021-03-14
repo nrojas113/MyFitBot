@@ -20,6 +20,7 @@ const Steps = (props) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
+    marginBottom: 20,
     justifyContent: "center",
   },
   steps: {

@@ -29,7 +29,6 @@ const BotDescription = (props) => {
           marginTop: 20,
           fontSize: 20,
           fontFamily: "EuphemiaUCAS",
-          textDecorationLine: "underline",
         }}
       >
         Steps Achieved: {bot.stepRange}

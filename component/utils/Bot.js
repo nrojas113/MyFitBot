@@ -5,10 +5,14 @@ import {
   StyleSheet,
   Animated,
   Platform,
-  Dimensions,
   TouchableOpacity,
   Text,
+  Pressable,
+  Dimensions,
+  Modal,
 } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { firebase } from "../../firebase/config";
 
 const { width, height } = Dimensions.get("screen");
@@ -54,6 +58,8 @@ class ImageLoader extends Component {
 const Bot = ({ steps }) => {
   const [loading, setLoading] = useState(true);
   const [bot, setBot] = useState({});
+  const [nextGoal, setNextGoal] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const ref = firebase.firestore().collection("Bots");
 
   useEffect(() => {
@@ -63,10 +69,20 @@ const Bot = ({ steps }) => {
       snapshot.forEach((doc) => {
         bots.push(doc.data());
       });
-      const filterBots = bots
-        .filter((bot) => bot.stepRange <= steps)
-        .sort((a, b) => b.stepRange - a.stepRange);
-      setBot(filterBots[0]);
+      const sortedBots = bots.sort((a, b) => b.stepRange - a.stepRange);
+      const targetBot = sortedBots.reduce((a, b) => {
+        let aDiff = Math.abs(a.stepRange - steps);
+        let bDiff = Math.abs(b.stepRange - steps);
+        if (aDiff === bDiff) {
+          return a > b ? a : b;
+        } else {
+          return bDiff < aDiff ? b : a;
+        }
+      });
+
+      let targetIdx = sortedBots.indexOf(targetBot);
+      setBot(targetBot);
+      setNextGoal(sortedBots[targetIdx - 1].stepRange);
       if (loading) {
         setLoading(false);
       }
@@ -78,8 +94,32 @@ const Bot = ({ steps }) => {
     <View style={styles.container}>
       {bot && (
         <View>
-          <ImageLoader style={styles.image} source={{ uri: bot.imageURL }} />
-          <Text style={styles.text}>{bot.comments}</Text>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <ImageLoader style={styles.image} source={{ uri: bot.imageURL }} />
+          </Pressable>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>{bot.comments}</Text>
+                <Text style={styles.goalText}>Your Next Step Goal is... </Text>
+                <Text style={styles.goalCount}>{nextGoal}</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <MaterialCommunityIcons name="close" size={26} />
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
         </View>
       )}
     </View>
@@ -93,19 +133,64 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    // width: imageW,
+    width,
     height: imageH,
     borderRadius: 30,
   },
-  text: {
-    marginTop: 20,
+  centeredView: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    // marginTop: 22,
+    marginBottom: 55,
+  },
+  modalView: {
+    width: width * 0.9,
+    height: height * 0.265,
+    // margin: 20,
+    backgroundColor: "seashell",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    padding: 3,
+    marginRight: width * 0.6,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "mistyrose",
+  },
+  textStyle: {
+    color: "black",
     fontSize: 20,
+  },
+  modalText: {
+    fontSize: 18,
     fontFamily: "EuphemiaUCAS-Italic",
-    textAlign: "center",
-    // color: "#ff006e",
+    marginBottom: 5,
+    textAlign: "left",
     fontWeight: "bold",
-    marginLeft: 20,
-    marginRight: 20,
+  },
+  goalText: {
+    fontFamily: "EuphemiaUCAS",
+    fontSize: 15,
+    marginTop: 5,
+  },
+  goalCount: {
+    fontSize: 30,
+    marginTop: 15,
   },
 });
 

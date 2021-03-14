@@ -14,6 +14,7 @@ import {
   Dimensions,
 } from "react-native";
 import WeatherForecast from "./WeatherForecast";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const TodayWeather = () => {
   const [weather, setWeather] = useState({});
@@ -56,7 +57,7 @@ const TodayWeather = () => {
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => setModalVisible(!modalVisible)}
                 >
-                  <Text style={styles.textStyle}>Close</Text>
+                  <MaterialCommunityIcons name="close" size={26} />
                 </Pressable>
               </View>
             </View>
@@ -124,7 +125,6 @@ const styles = StyleSheet.create({
   modalView: {
     width,
     height: height * 0.78,
-    margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
+    padding: 3,
+    marginRight: width * 0.7,
     elevation: 2,
   },
   buttonOpen: {

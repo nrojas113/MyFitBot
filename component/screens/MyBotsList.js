@@ -14,7 +14,6 @@ import {
   ScrollView,
 } from "react-native";
 import Header from "../utils/Header";
-import Images from "../images/index";
 import BotDescription from "../utils/BotDescription";
 import { firebase } from "../../firebase/config";
 
@@ -60,30 +59,10 @@ const MyBotsList = () => {
           pagingEnabled
           renderItem={(bot) => {
             return (
-              <View
-                style={{
-                  width,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 20,
-                  backgroundColor: "rgba(255,255,255,0.8)",
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 10,
-                  },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 20,
-                }}
-              >
+              <View style={styles.container}>
                 <Image
                   source={{ uri: bot.item.imageURL }}
-                  style={{
-                    width: imageW * 0.8,
-                    height: imageH * 0.8,
-                    resizeMode: "cover",
-                    borderRadius: 16,
-                  }}
+                  style={styles.image}
                 />
                 <BotDescription bot={bot.item} imageW={imageW} key={bot.id} />
               </View>
@@ -95,4 +74,34 @@ const MyBotsList = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  constainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "rgba(255,255,255,0.8)",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
+  },
+  image: {
+    width,
+    height: height * 0.4,
+    resizeMode: "cover",
+    borderRadius: 16,
+  },
+  // image: {
+  //   // width: imageW * 0.8,
+  //   // height: imageH * 0.8,
+  //   width: imageW,
+  //   height: imageH,
+  //   resizeMode: "cover",
+  //   borderRadius: 16,
+  // },
+});
 export default MyBotsList;
