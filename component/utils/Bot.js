@@ -10,6 +10,7 @@ import {
   Pressable,
   Dimensions,
   Modal,
+  Alert,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Button } from "react-native-elements";
@@ -65,27 +66,31 @@ const Bot = ({ steps }) => {
 
   useEffect(() => {
     const fetchMyBot = async () => {
-      const snapshot = await ref.get();
-      let bots = [];
-      snapshot.forEach((doc) => {
-        bots.push(doc.data());
-      });
-      const sortedBots = bots.sort((a, b) => b.stepRange - a.stepRange);
-      const targetBot = sortedBots.reduce((a, b) => {
-        let aDiff = Math.abs(a.stepRange - steps);
-        let bDiff = Math.abs(b.stepRange - steps);
-        if (aDiff === bDiff) {
-          return a > b ? a : b;
-        } else {
-          return bDiff < aDiff ? b : a;
-        }
-      });
+      try {
+        const snapshot = await ref.get();
+        let bots = [];
+        snapshot.forEach((doc) => {
+          bots.push(doc.data());
+        });
+        const sortedBots = bots.sort((a, b) => b.stepRange - a.stepRange);
+        const targetBot = sortedBots.reduce((a, b) => {
+          let aDiff = Math.abs(a.stepRange - steps);
+          let bDiff = Math.abs(b.stepRange - steps);
+          if (aDiff === bDiff) {
+            return a > b ? a : b;
+          } else {
+            return bDiff < aDiff ? b : a;
+          }
+        });
 
-      let targetIdx = sortedBots.indexOf(targetBot);
-      setBot(targetBot);
-      setNextGoal(sortedBots[targetIdx - 1].stepRange);
-      if (loading) {
-        setLoading(false);
+        let targetIdx = sortedBots.indexOf(targetBot);
+        setBot(targetBot);
+        setNextGoal(sortedBots[targetIdx - 1].stepRange);
+        if (loading) {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log("Error fetching my bot/firebase", error);
       }
     };
     fetchMyBot();

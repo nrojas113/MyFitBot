@@ -19,9 +19,7 @@ export default class EditBotForm extends Component {
     });
   }
   async submitChange() {
-    console.log("submit change triggered!!");
     try {
-      console.log("ID", this.props.bot.id);
       const ref = firebase
         .firestore()
         .collection("Bots")
@@ -41,12 +39,11 @@ export default class EditBotForm extends Component {
     }
   }
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <Input
           label="Steps Achieved"
-          value={this.state.stepRange}
+          value={this.state.stepRange.toString()}
           keyboardType="numeric"
           onChangeText={(input) => this.setState({ stepRange: input })}
         />

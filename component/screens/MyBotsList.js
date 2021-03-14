@@ -60,8 +60,8 @@ const BotListLanding = (props) => {
           fontWeight: "bold",
         }}
       >
-        ~Currently you own{" "}
-        <Text style={{ color: "red" }}>{props.bots.length}</Text> bots~
+        ~Currently you have{" "}
+        <Text style={{ color: "red" }}>{props.bots.length}</Text> bot types~
       </Text>
       <Text
         style={{

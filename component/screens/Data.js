@@ -56,14 +56,3 @@ const Data = () => {
 };
 
 export default Data;
-
-{
-  /* <SafeAreaView>
-<Header />
-{allSteps && activities ? (
-  <Graphs allSteps={allSteps} activities={activities} />
-) : (
-  <Text>Data not retrieved yet</Text>
-)}
-</SafeAreaView> */
-}
