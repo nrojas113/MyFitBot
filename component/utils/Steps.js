@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   steps: {
     fontFamily: "EuphemiaUCAS",
     color: "#ff006e",
-    fontSize: 90,
+    fontSize: 92,
     textAlign: "center",
     fontWeight: "bold",
     textShadowColor: "#f4978e",

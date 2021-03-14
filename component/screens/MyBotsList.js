@@ -15,10 +15,67 @@ import {
 import Header from "../utils/Header";
 import BotDescription from "../utils/BotDescription";
 import { firebase } from "../../firebase/config";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.7;
 const imageH = imageW * 1;
+
+const BotListLanding = (props) => {
+  return (
+    <View>
+      <Text
+        style={{
+          fontFamily: "EuphemiaUCAS",
+          marginTop: 40,
+          textAlign: "center",
+          fontSize: 40,
+        }}
+      >
+        MyBots
+      </Text>
+      <Text
+        style={{
+          fontFamily: "EuphemiaUCAS",
+          marginLeft: 20,
+          marginRight: 20,
+          marginTop: 30,
+          fontSize: 20,
+          textAlign: "center",
+          lineHeight: 30,
+          width: width * 0.9,
+        }}
+      >
+        Welcome to MyBots! Here, you can see all the bots currently available to
+        you. You can customize each bots with your own step goal (step achieved)
+        and change the motivational phrase to match what phrase will best
+        motivate you!
+      </Text>
+      <Text
+        style={{
+          fontFamily: "EuphemiaUCAS",
+          marginTop: 30,
+          fontSize: 20,
+          textAlign: "center",
+          fontWeight: "bold",
+        }}
+      >
+        ~Currently you own{" "}
+        <Text style={{ color: "red" }}>{props.bots.length}</Text> bots~
+      </Text>
+      <Text
+        style={{
+          fontFamily: "EuphemiaUCAS",
+          marginTop: 40,
+          fontSize: 20,
+          textAlign: "center",
+        }}
+      >
+        Swipe Left <MaterialCommunityIcons name="arrow-right" size={26} />
+      </Text>
+    </View>
+  );
+};
 
 const MyBotsList = () => {
   const [loading, setLoading] = useState(true);
@@ -54,6 +111,7 @@ const MyBotsList = () => {
         <Animated.FlatList
           data={bots}
           keyExtraction={(_, index) => index.toString()}
+          ListHeaderComponent={() => <BotListLanding bots={bots} />}
           horizontal
           pagingEnabled
           renderItem={(bot) => {
