@@ -12,6 +12,7 @@ import {
   Modal,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Button } from "react-native-elements";
 
 import { firebase } from "../../firebase/config";
 
@@ -94,9 +95,20 @@ const Bot = ({ steps }) => {
     <View style={styles.container}>
       {bot && (
         <View>
-          <Pressable onPress={() => setModalVisible(true)}>
-            <ImageLoader style={styles.image} source={{ uri: bot.imageURL }} />
-          </Pressable>
+          <ImageLoader style={styles.image} source={{ uri: bot.imageURL }} />
+          {bot.positive ? (
+            <Pressable onPress={() => setModalVisible(true)}>
+              <Text style={styles.shortText}>
+                Good job <Text style={styles.click}>...</Text>
+              </Text>
+            </Pressable>
+          ) : (
+            <Pressable onPress={() => setModalVisible(true)}>
+              <Text style={styles.shortText}>
+                Hmmmmmm <Text style={styles.click}>...</Text>
+              </Text>
+            </Pressable>
+          )}
           <Modal
             animationType="slide"
             transparent={true}
@@ -108,7 +120,7 @@ const Bot = ({ steps }) => {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>{bot.comments}</Text>
+                <Text style={styles.modalText}>"{bot.comments}"</Text>
                 <Text style={styles.goalText}>Your Next Step Goal is... </Text>
                 <Text style={styles.goalCount}>{nextGoal}</Text>
                 <Pressable
@@ -137,16 +149,29 @@ const styles = StyleSheet.create({
     height: imageH,
     borderRadius: 30,
   },
+  shortText: {
+    fontFamily: "EuphemiaUCAS",
+    fontSize: 25,
+    textAlign: "center",
+    marginTop: 10,
+  },
+  click: {
+    fontSize: 40,
+    color: "black",
+    textShadowColor: "darkslateblue",
+    textShadowOffset: { width: -1, height: 2 },
+    textShadowRadius: 5,
+  },
   centeredView: {
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
     // marginTop: 22,
-    marginBottom: 55,
+    marginBottom: 60,
   },
   modalView: {
     width: width * 0.9,
-    height: height * 0.265,
+    height: height * 0.35,
     // margin: 20,
     backgroundColor: "seashell",
     borderRadius: 20,

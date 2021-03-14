@@ -9,7 +9,6 @@ import {
   Image,
   StatusBar,
   Animated,
-  Button,
   TextInput,
   ScrollView,
 } from "react-native";
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width,
-    height: height * 0.4,
+    height: height * 0.47,
     resizeMode: "cover",
     borderRadius: 16,
   },

@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import firebase from "firebase";
-import {
-  Text,
-  View,
-  Button,
-  TextInput,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Platform,
-} from "react-native";
+import { Text, View, TextInput, StyleSheet, Platform } from "react-native";
+import { Input, Button } from "react-native-elements";
+
 export default class EditBotForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stepRange: "",
+      stepRange: 0,
       comments: "",
     };
     this.submitChange = this.submitChange.bind(this);
@@ -39,7 +33,7 @@ export default class EditBotForm extends Component {
         mood: this.props.bot.mood,
       });
       this.setState({
-        stepRange: "",
+        stepRange: 0,
         comments: "",
       });
     } catch (error) {
@@ -47,49 +41,37 @@ export default class EditBotForm extends Component {
     }
   }
   render() {
-    console.log("BOT INFO", this.props.bot);
     console.log(this.state);
     return (
-      <KeyboardAvoidingView
-      // behavior={Platform.OS === "ios" ? "padding" : "height"}
-      // style={styles.keyboard}
-      >
-        <View style={styles.container}>
-          <View>
-            <Text>Step Achieved: </Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(input) => this.setState({ stepRange: input })}
-            />
-          </View>
-          <View>
-            <Text>Comments: </Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(input) => this.setState({ comments: input })}
-            />
-          </View>
-        </View>
-        <Button title="update" onPress={() => this.submitChange()} />
-      </KeyboardAvoidingView>
+      <View style={styles.container}>
+        <Input
+          label="Steps Achieved"
+          value={this.state.stepRange}
+          keyboardType="numeric"
+          onChangeText={(input) => this.setState({ stepRange: input })}
+        />
+        <Input
+          style={{ height: 140 }}
+          label="Motivational Phrase"
+          value={this.state.comments}
+          multiline={true}
+          numberOfLines={2}
+          onChangeText={(input) => this.setState({ comments: input })}
+        />
+        <Button
+          title="update"
+          type="outline"
+          raised
+          onPress={() => this.submitChange()}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  keyboard: {
-    flex: 1,
-  },
   container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    margin: 15,
-    height: 25,
-    width: 120,
-    borderColor: "#7a42f4",
-    borderWidth: 1,
+    // flexDirection: "row",
+    alignItems: "flex-start",
   },
 });

@@ -9,6 +9,7 @@ const Steps = (props) => {
       <Text style={styles.steps}>
         {steps}
         <Text style={{ textAlign: "center", fontSize: 15 }}>
+          {" "}
           steps
           <MaterialCommunityIcons name="shoe-print" size={20} />
         </Text>
