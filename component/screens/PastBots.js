@@ -91,7 +91,7 @@ const PastBots = () => {
                       style={styles.image}
                     />
                     <View>
-                      <Text style={styles.text}>
+                      <Text style={styles.date}>
                         Date: {dailyStep.item.dateTime}
                       </Text>
                       <Text style={styles.text}>
@@ -142,6 +142,12 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginRight: 20,
+  },
+  date: {
+    fontFamily: "EuphemiaUCAS",
+    fontSize: 18,
+    padding: 5,
+    fontWeight: "bold",
   },
   text: {
     fontFamily: "EuphemiaUCAS",

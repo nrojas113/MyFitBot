@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   modalText: {
-    fontSize: 18,
+    fontSize: 19,
     fontFamily: "EuphemiaUCAS-Italic",
     marginBottom: 5,
     textAlign: "left",
@@ -219,8 +219,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   goalCount: {
-    fontSize: 30,
-    marginTop: 15,
+    fontSize: 40,
+    marginTop: 5,
   },
 });
 
