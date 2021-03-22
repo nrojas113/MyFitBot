@@ -73,7 +73,7 @@ const TodayWeather = () => {
               <Text style={styles.text}>
                 {Math.ceil(weather.current.temp)} F{" "}
                 <Text style={styles.feelsLike}>
-                  (Feels Like {Math.ceil(weather.current.feels_like)} F){" "}
+                  (Feels like {Math.ceil(weather.current.feels_like)} F){" "}
                 </Text>
               </Text>
             </View>
@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 10,
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: "EuphemiaUCAS",
     color: "dimgrey",
     fontWeight: "bold",
     textAlign: "center",
   },
   feelsLike: {
-    fontSize: 12,
+    fontSize: 13,
   },
   centeredView: {
     flex: 1,

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: "EuphemiaUCAS",
     color: "dimgrey",
-    fontSize: 15,
+    fontSize: 18,
     textAlign: "center",
     fontWeight: "bold",
   },

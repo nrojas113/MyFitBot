@@ -97,7 +97,7 @@ const Graphs = (props) => {
             backgroundColor="transparent"
             style={{ marginBottom: 20 }}
           />
-          <Text style={styles.text}>My Steps Stats (1m)</Text>
+          <Text style={styles.text}>My Steps Stats (Last 30 days)</Text>
           <LineChart
             data={pastSteps}
             width={Dimensions.get("window").width}

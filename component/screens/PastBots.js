@@ -95,7 +95,7 @@ const PastBots = () => {
                         Date: {dailyStep.item.dateTime}
                       </Text>
                       <Text style={styles.text}>
-                        Steps: {dailyStep.item.value}
+                        Total Steps: {dailyStep.item.value}
                       </Text>
                     </View>
                   </View>
